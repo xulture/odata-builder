@@ -36,7 +36,7 @@ jobs:
       is-pr: ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -113,7 +113,7 @@ jobs:
             coverage: true
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js ${{ matrix.node }}
         uses: actions/setup-node@v6
@@ -133,7 +133,7 @@ jobs:
 
       - name: Upload Coverage
         if: matrix.coverage && hashFiles('./coverage/lcov.info') != ''
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: ./coverage/lcov.info
           fail_ci_if_error: false
@@ -151,7 +151,7 @@ jobs:
       package-name: ${{ steps.package-info.outputs.name }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -216,7 +216,7 @@ jobs:
       validated: ${{ steps.validate.outputs.valid }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Validate Version Consistency
         id: validate
@@ -263,7 +263,7 @@ jobs:
       url: https://www.npmjs.com/package/${{ needs.build.outputs.package-name }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             package.json
@@ -281,7 +281,7 @@ jobs:
         run: npm install -g npm@latest
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           name: build-artifacts-${{ github.run_id }}
           path: ./dist
