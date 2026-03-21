@@ -277,6 +277,9 @@ jobs:
           node-version: ${{ needs.setup.outputs.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Upgrade npm for Trusted Publishing
+        run: npm install -g npm@latest
+
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
