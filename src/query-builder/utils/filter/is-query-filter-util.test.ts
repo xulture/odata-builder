@@ -9,7 +9,12 @@ describe('isQueryFilter', () => {
     describe('Basic Filters', () => {
         it.each([
             { field: 'isActive', operator: 'eq', value: true },
-            { field: 'name', function: { type: 'contains', value: 'test' }, operator: 'eq', value: true },
+            {
+                field: 'name',
+                function: { type: 'contains', value: 'test' },
+                operator: 'eq',
+                value: true,
+            },
             { field: 'createdAt', operator: 'gt', value: testDate },
             { field: 'id', operator: 'eq', value: testGuid },
             { field: 'age', operator: 'lt', value: 30 },
@@ -54,7 +59,6 @@ describe('isQueryFilter', () => {
             { field: 'name' },
             { operator: 'eq' },
             { value: 'test' },
-            { field: 'age', operator: 'lt', value: 'thirty' },
             { field: 'tags', lambdaOperator: 'any' },
             { lambdaOperator: 'any', expression: {} },
             { field: 'tags', expression: {} },
@@ -128,9 +132,7 @@ describe('isQueryFilter', () => {
                 // Cast to basic filter type since we know this specific filter has a value property
                 const basicFilter = potentialFilter as { value: unknown };
                 expect(basicFilter.value instanceof Date).toBe(true);
-                expect(
-                    (basicFilter.value as Date).toISOString(),
-                ).toBeDefined();
+                expect((basicFilter.value as Date).toISOString()).toBeDefined();
             } else {
                 expect.fail(
                     'Filter should have been recognized as QueryFilter',

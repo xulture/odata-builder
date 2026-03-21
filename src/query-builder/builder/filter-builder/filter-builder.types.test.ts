@@ -124,9 +124,8 @@ describe('Forbidden Operations', () => {
         });
     });
 
-    it('should NOT allow gt on string', () => {
+    it('should allow gt on string (lexicographic comparison)', () => {
         new FilterBuilder<User>().where(x => {
-            // @ts-expect-error - gt is not on StringFieldOperations
             return x.name.gt('test');
         });
     });
@@ -433,7 +432,9 @@ describe('Edge Cases', () => {
     describe('Readonly', () => {
         it('readonly fields work normally', () => {
             type Item = { readonly name: string };
-            const result = new FilterBuilder<Item>().where(x => x.name.eq('test'));
+            const result = new FilterBuilder<Item>().where(x =>
+                x.name.eq('test'),
+            );
             assertType<FilterBuilder<Item>>(result);
         });
 
@@ -556,7 +557,9 @@ describe('String ops - full coverage', () => {
         new FilterBuilder<SimpleUser>().where(x => x.name.indexof('x').eq(0));
     });
     it('substring', () => {
-        new FilterBuilder<SimpleUser>().where(x => x.name.substring(0, 5).eq('x'));
+        new FilterBuilder<SimpleUser>().where(x =>
+            x.name.substring(0, 5).eq('x'),
+        );
     });
     it('concat', () => {
         new FilterBuilder<SimpleUser>().where(x => x.name.concat('x').eq('x'));
@@ -708,10 +711,14 @@ describe('Array ops - full coverage', () => {
     type SimpleUser = { tags: string[]; orders: { price: number }[] };
 
     it('any on primitive array', () => {
-        new FilterBuilder<SimpleUser>().where(x => x.tags.any(t => t.s.eq('x')));
+        new FilterBuilder<SimpleUser>().where(x =>
+            x.tags.any(t => t.s.eq('x')),
+        );
     });
     it('all on primitive array', () => {
-        new FilterBuilder<SimpleUser>().where(x => x.tags.all(t => t.s.eq('x')));
+        new FilterBuilder<SimpleUser>().where(x =>
+            x.tags.all(t => t.s.eq('x')),
+        );
     });
     it('any on object array', () => {
         new FilterBuilder<SimpleUser>().where(x =>
